@@ -64,6 +64,67 @@ public class DimensionTest {
 		assertTrue(ordered(filtered, new int[]{2,3,3,4}));
 	}
 	
+	@Test
+	public void testFilterExact() {
+		Collection<Integer> items = new ArrayList<Integer>();
+		items.add(1);
+		items.add(2);
+		items.add(3);
+		items.add(4);
+		items.add(5);
+		
+		DataFilter<Integer> df = new DataFilter<Integer>();
+		df.addAll(items);
+		
+		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+
+			public Integer apply(Integer type) {
+				return type;
+			}
+		}, Integer.class);
+		
+		Collection<Integer> filtered = dimInt.filterExact(1);
+		assertEquals(1, filtered.size());
+		assertTrue(contains(filtered, new int[]{1}));
+		
+		df.add(3);
+		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+
+			public Integer apply(Integer type) {
+				return type;
+			}
+		}, Integer.class);
+		
+		filtered = dimInt.filterExact(3);
+		assertEquals(2, filtered.size());
+		assertTrue(contains(filtered, new int[]{3,3}));
+	}
+	
+	@Test
+	public void testFilterAll() {
+		Collection<Integer> items = new ArrayList<Integer>();
+		items.add(1);
+		items.add(2);
+		items.add(3);
+		items.add(4);
+		items.add(5);
+		
+		DataFilter<Integer> df = new DataFilter<Integer>();
+		df.addAll(items);
+		
+		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+
+			public Integer apply(Integer type) {
+				return type;
+			}
+		}, Integer.class);
+		
+		Collection<Integer> filtered = dimInt.filterAll();
+		assertEquals(5, filtered.size());
+		assertTrue(contains(filtered, new int[]{1,2,3,4,5}));
+		assertTrue(ordered(filtered, new int[]{1,2,3,4,5}));
+	}
+	
 	private boolean contains (Collection<Integer> toTest, int [] cList) {
 		for (int i : cList) {
 			if (!toTest.contains(i)) {

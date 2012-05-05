@@ -35,6 +35,7 @@ public class DataFilter<T> {
 	public <X> Dimension<X, T> dimension (ValueAccessorFunktion<T, X> vaf, Class<X> clazz) {
 		
 		Dimension<X, T> dim = new Dimension<X, T>();
+		
 		for (T value : items) {
 			X key = vaf.apply(value);
 			
