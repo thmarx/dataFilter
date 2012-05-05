@@ -65,7 +65,7 @@ public class DataFilterTest {
 		
 		assertNotNull(dimInt);
 		
-		assertEquals(3, dimInt.size());
+		assertEquals(3, dimInt.getValueCount());
 	}
 
 }

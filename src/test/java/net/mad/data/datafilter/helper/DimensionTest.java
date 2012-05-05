@@ -38,14 +38,30 @@ public class DimensionTest {
 		Collection<Integer> filtered = dimInt.filterRange(1, 5);
 		assertEquals(5, filtered.size());
 		assertTrue(contains(filtered, new int[]{1,2,3,4,5}));
+		assertTrue(ordered(filtered, new int[]{1,2,3,4}));
 		
 		filtered = dimInt.filterRange(1, 4);
 		assertEquals(4, filtered.size());
 		assertTrue(contains(filtered, new int[]{1,2,3,4}));
+		assertTrue(ordered(filtered, new int[]{1,2,3,4}));
 		
 		filtered = dimInt.filterRange(2, 4);
 		assertEquals(3, filtered.size());
 		assertTrue(contains(filtered, new int[]{2,3,4}));
+		assertTrue(ordered(filtered, new int[]{2,3,4}));
+		
+		df.add(3);
+		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+
+			public Integer apply(Integer type) {
+				return type;
+			}
+		}, Integer.class);
+		
+		filtered = dimInt.filterRange(2, 4);
+		assertEquals(4, filtered.size());
+		assertTrue(contains(filtered, new int[]{2,3,3,4}));
+		assertTrue(ordered(filtered, new int[]{2,3,3,4}));
 	}
 	
 	private boolean contains (Collection<Integer> toTest, int [] cList) {
