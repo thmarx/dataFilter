@@ -25,8 +25,10 @@ public class DimensionTest {
 		items.add(4);
 		items.add(5);
 		
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
 		df.addAll(items);
+		DataFilter.builder(Integer.class).build();
+		
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
@@ -73,7 +75,7 @@ public class DimensionTest {
 		items.add(4);
 		items.add(5);
 		
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
 		df.addAll(items);
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
@@ -109,7 +111,7 @@ public class DimensionTest {
 		items.add(4);
 		items.add(5);
 		
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).build();
 		df.addAll(items);
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.mad.data.datafilter.helper.Dimension;
+import net.mad.data.datafilter.helper.NoSynchedDimension;
 import net.mad.data.datafilter.helper.ValueAccessorFunktion;
 
 import org.junit.BeforeClass;
@@ -19,7 +20,7 @@ public class DataFilterTest {
 
 	@Test
 	public void testAddRemove() {
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
 		
 		df.add(1);
 		
@@ -37,7 +38,7 @@ public class DataFilterTest {
 		items.add(2);
 		items.add(3);
 		
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
 		
 		df.addAll(items);
 		assertEquals(3, df.size());
@@ -53,7 +54,7 @@ public class DataFilterTest {
 		items.add(2);
 		items.add(3);
 		
-		DataFilter<Integer> df = new DataFilter<Integer>();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
 		df.addAll(items);
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
