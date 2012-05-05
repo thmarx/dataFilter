@@ -2,7 +2,9 @@ package net.mad.data.datafilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -17,7 +19,7 @@ import net.mad.data.datafilter.helper.ValueAccessorFunktion;
 
 public class DataFilter<T> {
 
-	private Collection<T> items = new ArrayList<T>();
+	private Collection<T> items = null;
 
 	boolean synched = false;
 
@@ -38,12 +40,28 @@ public class DataFilter<T> {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param clazz the type
+	 * @return 
+	 */
 	public static <BT> Builder<BT> builder (Class<BT> clazz) {
 		return new Builder<BT>();
 	}
 	
+	/**
+	 * private constructor
+	 * 
+	 * @param builder
+	 */
 	private DataFilter(Builder builder) {
 		this.synched = builder.synched;
+		
+		if (this.synched) {
+			items = Collections.synchronizedCollection(new ArrayList<T>());
+		} else {
+			items = new ArrayList<T>();
+		}
 	}
 
 	public void add(T item) {
@@ -77,36 +95,65 @@ public class DataFilter<T> {
 
 	private <X> Dimension<X, T> dimension_synched(
 			ValueAccessorFunktion<T, X> vaf, Class<X> clazz) {
-		ExecutorService pool = Executors.newFixedThreadPool(10);
-		Set<Future<X>> set = new HashSet<Future<X>>();
-		try {
-			Dimension<X, T> dim = new SynchedDimension<X, T>();
+		
+		SynchedDimension<X, T> dim = new SynchedDimension<X, T>();
 
-			for (T value : items) {
+		for (T value : items) {
 
-				DimensionCollector<X> callable = new DimensionCollector<X>(vaf,
-						dim, value);
-				Future<X> future = (Future<X>) pool.submit(callable);
-				set.add(future);
-
-				// X key = vaf.apply(value);
-				// dim.add(key, value);
-			}
-
-			for (Future<X> future : set) {
-				future.get();
-			}
-
-			return dim;
-		} catch (ExecutionException ee) {
-			ee.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-			pool.shutdown();
+			X key = vaf.apply(value);
+			dim.add(key, value);
 		}
 
-		return null;
+		return dim;
+		
+//		ExecutorService pool = Executors.newFixedThreadPool(100);
+//		Set<Future<X>> set = new HashSet<Future<X>>();
+//		try {
+//			Dimension<X, T> dim = new SynchedDimension<X, T>();
+//			
+//			int isize = items.size();
+//			
+//			int part = isize / 100;
+//			
+//			// create 10 future tasks
+//			int start = 0;
+//			int end = start + part;
+//			for (int i = 0; i < 100; i++){
+//				
+//				DimensionCollector2<X> callable = new DimensionCollector2<X>(vaf,
+//						dim, start, end, new ArrayList<T>(items));
+//				Future<X> future = (Future<X>) pool.submit(callable);
+//				set.add(future);
+//				
+//				start = start + part + 1;
+//				end = start + part;
+//				
+//				if (end >= items.size()) {
+//					end = items.size()-1;
+//				}
+//			}
+//
+//			
+//			for (Future<X> future : set) {
+//				future.get();
+//			}
+//			
+////			for (T value : items) {
+////
+////				X key = vaf.apply(value);
+////				dim.add(key, value);
+////			}
+//
+//			return dim;
+//		} catch (ExecutionException ee) {
+//			ee.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		} finally {
+//			pool.shutdown();
+//		}
+//
+//		return null;
 	}
 
 	private <X> Dimension<X, T> dimension_nosynched(
@@ -128,25 +175,56 @@ public class DataFilter<T> {
 		return items.size();
 	}
 
-	class DimensionCollector<X> implements Callable<Void> {
-
-		private ValueAccessorFunktion<T, X> vaf;
-		private Dimension<X, T> dim;
-		private T value;
-
-		public DimensionCollector(ValueAccessorFunktion<T, X> vaf,
-				Dimension<X, T> dim, T value) {
-			this.vaf = vaf;
-			this.dim = dim;
-			this.value = value;
-		}
-
-		public Void call() throws Exception {
-			X key = vaf.apply(value);
-			dim.add(key, value);
-
-			return null;
-		}
-
-	}
+//	class DimensionCollector<X> implements Callable<Void> {
+//
+//		private ValueAccessorFunktion<T, X> vaf;
+//		private Dimension<X, T> dim;
+//		private T value;
+//
+//		public DimensionCollector(ValueAccessorFunktion<T, X> vaf,
+//				Dimension<X, T> dim, T value) {
+//			this.vaf = vaf;
+//			this.dim = dim;
+//			this.value = value;
+//		}
+//
+//		public Void call() throws Exception {
+//			X key = vaf.apply(value);
+//			dim.add(key, value);
+//
+//			return null;
+//		}
+//	}
+//	
+//	class DimensionCollector2<X> implements Callable<Void> {
+//
+//		private ValueAccessorFunktion<T, X> vaf;
+//		private Dimension<X, T> dim;
+//		
+//		private int start;
+//		private int end;
+//		
+//		private List<T> itemList;
+//		
+//		public DimensionCollector2(ValueAccessorFunktion<T, X> vaf,
+//				Dimension<X, T> dim, int start, int end, List<T> itemList) {
+//			this.vaf = vaf;
+//			this.dim = dim;
+//			this.start = start;
+//			this.end = end;
+//			this.itemList = itemList;
+//		}
+//
+//		public Void call() throws Exception {
+//			
+//			for (int i = start; i <= end; i++) {
+//				T value = itemList.get(i);
+//				X key = vaf.apply(value);
+//				dim.add(key, value);
+//			}
+//
+//			return null;
+//		}
+//
+//	}
 }

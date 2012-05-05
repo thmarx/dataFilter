@@ -19,7 +19,7 @@ Maven dependency:
 <dependency>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.1</version>
+	<version>0.3</version>
 </dependency>
 ```
 

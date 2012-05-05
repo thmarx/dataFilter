@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.perf4j.LoggingStopWatch;
 import org.perf4j.StopWatch;
 
-public class DateFilterPerformanceTest {
+public class SynchedDateFilterPerformanceTest {
 	
 	class Person {
 		public String name;
@@ -44,7 +44,7 @@ public class DateFilterPerformanceTest {
 		
 		StopWatch stopWatch = new LoggingStopWatch("createDateFilter 1000");
 
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		stopWatch.stop();
@@ -54,7 +54,7 @@ public class DateFilterPerformanceTest {
 	public void testCreateNameDimesion_1000 () {
 		
 		List<Person> persons = createPersons(1000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		StopWatch stopWatch = new LoggingStopWatch("testCreateNameDimesion_1000");
@@ -73,7 +73,7 @@ public class DateFilterPerformanceTest {
 	public void testCreateNameDimesion_10000 () {
 		
 		List<Person> persons = createPersons(10000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		StopWatch stopWatch = new LoggingStopWatch("testCreateNameDimesion_10000");
@@ -92,7 +92,7 @@ public class DateFilterPerformanceTest {
 	public void testCreateNameDimesion_100000 () {
 		
 		List<Person> persons = createPersons(100000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		StopWatch stopWatch = new LoggingStopWatch("testCreateNameDimesion_100000");
@@ -112,7 +112,7 @@ public class DateFilterPerformanceTest {
 	public void testCreateNameDimesion_500000 () {
 		
 		List<Person> persons = createPersons(500000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		StopWatch stopWatch = new LoggingStopWatch("testCreateNameDimesion_500000");
@@ -132,7 +132,7 @@ public class DateFilterPerformanceTest {
 	public void testCreateNameDimesion_1000000 () {
 		
 		List<Person> persons = createPersons(1000000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class).build();
+		DataFilter<Person> personFilter = DataFilter.builder(Person.class).synched(true).build();
 		personFilter.addAll(persons);
 		
 		StopWatch stopWatch = new LoggingStopWatch("testCreateNameDimesion_1000000");

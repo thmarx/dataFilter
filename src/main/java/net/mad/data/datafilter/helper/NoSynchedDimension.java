@@ -9,7 +9,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class NoSynchedDimension<K, V> extends AbstractIndex<K, V, TreeMap<K,ArrayList<V>>,ArrayList<V>> implements Dimension<K, V>{
-//	private TreeMap<K, V> index = new TreeMap<K, V>();
 	
 	public NoSynchedDimension () {
 		super(new TreeMap<K, ArrayList<V>>());
