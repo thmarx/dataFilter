@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import net.mad.data.datafilter.DataFilter;
+import net.mad.data.datafilter.dimension.Dimension;
+import net.mad.data.datafilter.function.ValueAccessorFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,7 +34,7 @@ public class DimensionTest {
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);
@@ -55,7 +57,7 @@ public class DimensionTest {
 		df.add(3);
 		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);
@@ -80,7 +82,7 @@ public class DimensionTest {
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);
@@ -92,7 +94,7 @@ public class DimensionTest {
 		df.add(3);
 		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);
@@ -116,7 +118,7 @@ public class DimensionTest {
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);

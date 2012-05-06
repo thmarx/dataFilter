@@ -12,10 +12,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import net.mad.data.datafilter.helper.Dimension;
-import net.mad.data.datafilter.helper.NoSynchedDimension;
-import net.mad.data.datafilter.helper.SynchedDimension;
-import net.mad.data.datafilter.helper.ValueAccessorFunktion;
+import net.mad.data.datafilter.dimension.Dimension;
+import net.mad.data.datafilter.dimension.NoSynchedDimension;
+import net.mad.data.datafilter.dimension.SynchedDimension;
+import net.mad.data.datafilter.function.FilterFunction;
+import net.mad.data.datafilter.function.ValueAccessorFunktion;
 
 public class DataFilter<T> {
 
@@ -86,145 +87,37 @@ public class DataFilter<T> {
 
 	public <X> Dimension<X, T> dimension(ValueAccessorFunktion<T, X> vaf,
 			Class<X> clazz) {
+		Dimension<X, T> dim = null;
+		
 		if (synched) {
-			return dimension_synched(vaf, clazz);
+			dim = new SynchedDimension<X, T>();
 		} else {
-			return dimension_nosynched(vaf, clazz);
+			dim = new NoSynchedDimension<X, T>();
 		}
-	}
-
-	private <X> Dimension<X, T> dimension_synched(
-			ValueAccessorFunktion<T, X> vaf, Class<X> clazz) {
-		
-		SynchedDimension<X, T> dim = new SynchedDimension<X, T>();
 
 		for (T value : items) {
 
-			X key = vaf.apply(value);
+			X key = vaf.value(value);
 			dim.add(key, value);
 		}
 
 		return dim;
-		
-//		ExecutorService pool = Executors.newFixedThreadPool(100);
-//		Set<Future<X>> set = new HashSet<Future<X>>();
-//		try {
-//			Dimension<X, T> dim = new SynchedDimension<X, T>();
-//			
-//			int isize = items.size();
-//			
-//			int part = isize / 100;
-//			
-//			// create 10 future tasks
-//			int start = 0;
-//			int end = start + part;
-//			for (int i = 0; i < 100; i++){
-//				
-//				DimensionCollector2<X> callable = new DimensionCollector2<X>(vaf,
-//						dim, start, end, new ArrayList<T>(items));
-//				Future<X> future = (Future<X>) pool.submit(callable);
-//				set.add(future);
-//				
-//				start = start + part + 1;
-//				end = start + part;
-//				
-//				if (end >= items.size()) {
-//					end = items.size()-1;
-//				}
-//			}
-//
-//			
-//			for (Future<X> future : set) {
-//				future.get();
-//			}
-//			
-////			for (T value : items) {
-////
-////				X key = vaf.apply(value);
-////				dim.add(key, value);
-////			}
-//
-//			return dim;
-//		} catch (ExecutionException ee) {
-//			ee.printStackTrace();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} finally {
-//			pool.shutdown();
-//		}
-//
-//		return null;
+	}
+	
+	public static <T> Collection<T> filter(Collection<T> target, FilterFunction<T> predicate) {
+	    Collection<T> result = new ArrayList<T>();
+	    for (T element: target) {
+	        if (predicate.apply(element)) {
+	            result.add(element);
+	        }
+	    }
+	    return result;
 	}
 
-	private <X> Dimension<X, T> dimension_nosynched(
-			ValueAccessorFunktion<T, X> vaf, Class<X> clazz) {
-
-		NoSynchedDimension<X, T> dim = new NoSynchedDimension<X, T>();
-
-		for (T value : items) {
-
-			X key = vaf.apply(value);
-			dim.add(key, value);
-		}
-
-		return dim;
-
-	}
+	
 
 	public int size() {
 		return items.size();
 	}
 
-//	class DimensionCollector<X> implements Callable<Void> {
-//
-//		private ValueAccessorFunktion<T, X> vaf;
-//		private Dimension<X, T> dim;
-//		private T value;
-//
-//		public DimensionCollector(ValueAccessorFunktion<T, X> vaf,
-//				Dimension<X, T> dim, T value) {
-//			this.vaf = vaf;
-//			this.dim = dim;
-//			this.value = value;
-//		}
-//
-//		public Void call() throws Exception {
-//			X key = vaf.apply(value);
-//			dim.add(key, value);
-//
-//			return null;
-//		}
-//	}
-//	
-//	class DimensionCollector2<X> implements Callable<Void> {
-//
-//		private ValueAccessorFunktion<T, X> vaf;
-//		private Dimension<X, T> dim;
-//		
-//		private int start;
-//		private int end;
-//		
-//		private List<T> itemList;
-//		
-//		public DimensionCollector2(ValueAccessorFunktion<T, X> vaf,
-//				Dimension<X, T> dim, int start, int end, List<T> itemList) {
-//			this.vaf = vaf;
-//			this.dim = dim;
-//			this.start = start;
-//			this.end = end;
-//			this.itemList = itemList;
-//		}
-//
-//		public Void call() throws Exception {
-//			
-//			for (int i = start; i <= end; i++) {
-//				T value = itemList.get(i);
-//				X key = vaf.apply(value);
-//				dim.add(key, value);
-//			}
-//
-//			return null;
-//		}
-//
-//	}
 }

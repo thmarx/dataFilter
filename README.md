@@ -19,7 +19,7 @@ Maven dependency:
 <dependency>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 </dependency>
 ```
 
@@ -48,7 +48,7 @@ personFilter.addAll(personCollection);
 create dimension for the name attribute of the person class
 */
 Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
-	public String apply(Person type) {
+	public String value(Person type) {
 		return type.name;
 	}
 }, String.class);
@@ -57,7 +57,7 @@ Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunk
 create dimension for the age attribute of the person class
 */
 Dimension<Integer, Person> ageDim = personFilter.dimension(new ValueAccessorFunktion<Person, Integer>() {
-	public Integer apply(Person type) {
+	public Integer value(Person type) {
 		return type.age;
 	}
 }, Integer.class);

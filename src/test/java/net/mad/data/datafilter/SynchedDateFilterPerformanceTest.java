@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.mad.data.datafilter.helper.Dimension;
-import net.mad.data.datafilter.helper.NoSynchedDimension;
-import net.mad.data.datafilter.helper.ValueAccessorFunktion;
+import net.mad.data.datafilter.dimension.Dimension;
+import net.mad.data.datafilter.dimension.NoSynchedDimension;
+import net.mad.data.datafilter.function.ValueAccessorFunktion;
 
 import org.junit.Test;
 import org.perf4j.LoggingStopWatch;
@@ -61,7 +61,7 @@ public class SynchedDateFilterPerformanceTest {
 
 		Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
 
-			public String apply(Person type) {
+			public String value(Person type) {
 				return type.name;
 			}
 		}, String.class);
@@ -80,7 +80,7 @@ public class SynchedDateFilterPerformanceTest {
 
 		Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
 
-			public String apply(Person type) {
+			public String value(Person type) {
 				return type.name;
 			}
 		}, String.class);
@@ -99,7 +99,7 @@ public class SynchedDateFilterPerformanceTest {
 
 		Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
 
-			public String apply(Person type) {
+			public String value(Person type) {
 				return type.name;
 			}
 		}, String.class);
@@ -119,7 +119,7 @@ public class SynchedDateFilterPerformanceTest {
 
 		Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
 
-			public String apply(Person type) {
+			public String value(Person type) {
 				return type.name;
 			}
 		}, String.class);
@@ -139,7 +139,7 @@ public class SynchedDateFilterPerformanceTest {
 
 		Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
 
-			public String apply(Person type) {
+			public String value(Person type) {
 				return type.name;
 			}
 		}, String.class);

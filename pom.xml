@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 
 	<dependencies>
 		<dependency>
@@ -24,4 +24,43 @@
 			<version>12.0</version>
 		</dependency>
 	</dependencies>
+	<scm>
+		<url>https://github.com/thmarx/dataFilter</url>
+	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/thmarx/dataFilter/issues</url>
+	</issueManagement>
+	<developers>
+		<developer>
+			<name>Thorsten Marx</name>
+			<email>thmarx@gmx.net</email>
+		</developer>
+	</developers>
+	
+	
+	<build>
+		<plugins>
+			 <plugin>
+      			<artifactId>maven-source-plugin</artifactId>
+      			<executions>
+        			<execution>
+          				<id>attach-sources</id>
+          				<phase>package</phase>
+          				<goals><goal>jar</goal></goals> 
+        			</execution>
+      			</executions>
+    		</plugin>
+    		<plugin> 
+      			<artifactId>maven-javadoc-plugin</artifactId> 
+      			<executions> 
+        			<execution> 
+          				<id>attach-javadocs</id>
+          				<phase>package</phase>
+          				<goals><goal>jar</goal></goals> 
+        			</execution> 
+      			</executions> 
+    		</plugin>
+		</plugins>
+	</build>
 </project>

@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.mad.data.datafilter.helper.Dimension;
-import net.mad.data.datafilter.helper.NoSynchedDimension;
-import net.mad.data.datafilter.helper.ValueAccessorFunktion;
+import net.mad.data.datafilter.dimension.Dimension;
+import net.mad.data.datafilter.dimension.NoSynchedDimension;
+import net.mad.data.datafilter.function.ValueAccessorFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -59,7 +59,7 @@ public class DataFilterTest {
 		
 		Dimension<Integer, Integer> dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-			public Integer apply(Integer type) {
+			public Integer value(Integer type) {
 				return type;
 			}
 		}, Integer.class);
