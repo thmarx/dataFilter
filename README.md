@@ -16,10 +16,17 @@ Maven repository
 Maven dependency: 
 -------------
 ``` xml
+<!-- java 7 -->
 <dependency>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.5</version>
+	<version>0.6</version>
+</dependency>
+<!-- java 6 -->
+<dependency>
+	<groupId>net.mad.data</groupId>
+	<artifactId>datafilter6</artifactId>
+	<version>0.6</version>
 </dependency>
 ```
 

@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.mad.data</groupId>
-	<artifactId>datafilter</artifactId>
+	<artifactId>datafilter6</artifactId>
 	<version>0.6</version>
 
 	<properties>
@@ -27,6 +27,11 @@
 			<artifactId>guava</artifactId>
 			<version>12.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jsr166-mirror</groupId>
+			<artifactId>jsr166y</artifactId>
+			<version>1.7.0</version>
+		</dependency>
 	</dependencies>
 	<scm>
 		<url>https://github.com/thmarx/dataFilter</url>
@@ -44,13 +49,16 @@
 
 
 	<build>
+		<directory>${project.basedir}/target6</directory>
+
+		<sourceDirectory>${project.basedir}/src6/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.6</source>
+					<target>1.6</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
