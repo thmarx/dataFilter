@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
-public class SynchedDimension<K, V> extends AbstractIndex<K, V, SortedMap<K,ArrayList<V>>,ArrayList<V>> implements Dimension<K, V>{
+public class SynchedDimension<K, V> extends AbstractIndex<K, V, ConcurrentSkipListMap<K,ArrayList<V>>,ArrayList<V>> implements Dimension<K, V>{
 	
 	public SynchedDimension () {
-		super(Collections.synchronizedSortedMap(new TreeMap<K, ArrayList<V>>()));
+		super(new ConcurrentSkipListMap<K, ArrayList<V>>());
 	}
 	
 	
@@ -34,7 +35,7 @@ public class SynchedDimension<K, V> extends AbstractIndex<K, V, SortedMap<K,Arra
 		return filter(from, to);
 	}
 	public Collection<V> filter (K from, K to) {
-		Map<K, ArrayList<V>> items = ((TreeMap<K, ArrayList<V>>)map).subMap(from, true, to, true);
+		Map<K, ArrayList<V>> items = map.subMap(from, true, to, true);
 		
 		List<V> result = new ArrayList<V>();
 		for (List<V> list : items.values()) {

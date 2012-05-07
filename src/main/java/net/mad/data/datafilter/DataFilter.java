@@ -3,14 +3,10 @@ package net.mad.data.datafilter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.RecursiveAction;
 
 import net.mad.data.datafilter.dimension.Dimension;
 import net.mad.data.datafilter.dimension.NoSynchedDimension;
@@ -22,10 +18,23 @@ public class DataFilter<T> {
 
 	private Collection<T> items = null;
 
+	/**
+	 * use snychronized instances of collection and map
+	 */
 	boolean synched = false;
+	/**
+	 * use the java fork/join framework
+	 */
+	boolean parallel = false;
+	/**
+	 * the max size of the collection, collections greater will be split
+	 */
+	int parallelCollectionSize = 50;
 
 	public static class Builder<T> {
 		private boolean synched = false;
+		boolean parallel = false;
+		int parallelCollectionSize = 50;
 		
 		public Builder () {
 			
@@ -35,8 +44,20 @@ public class DataFilter<T> {
 			this.synched = synched;
 			return this;
 		}
+		public Builder<T> parallelCollectionSize(int parallelCollectionSize) {
+			this.parallelCollectionSize = parallelCollectionSize;
+			return this;
+		}
+		public Builder<T> parallel(boolean parallel) {
+			this.parallel = parallel;
+			this.synched = true;
+			return this;
+		}
 		
 		public DataFilter<T> build () {
+			if (parallel && !synched) {
+				throw new IllegalArgumentException("");
+			}
 			return new DataFilter<T>(this);
 		}
 	}
@@ -57,6 +78,7 @@ public class DataFilter<T> {
 	 */
 	private DataFilter(Builder builder) {
 		this.synched = builder.synched;
+		this.parallel = builder.parallel;
 		
 		if (this.synched) {
 			items = Collections.synchronizedCollection(new ArrayList<T>());
@@ -94,12 +116,31 @@ public class DataFilter<T> {
 		} else {
 			dim = new NoSynchedDimension<X, T>();
 		}
+		
+		if (parallel) {
+			ForkJoinPool pool = new ForkJoinPool();
+			
+			DimensionAction<X> action = new DimensionAction<X>(vaf, dim, new ArrayList<T>(items));
+			pool.invoke(action);
+			
+			try {
+				action.get();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			} finally {
+				pool.shutdown();
+			}
+		} else {
+			for (T value : items) {
 
-		for (T value : items) {
-
-			X key = vaf.value(value);
-			dim.add(key, value);
+				X key = vaf.value(value);
+				dim.add(key, value);
+			}
 		}
+
+
 
 		return dim;
 	}
@@ -118,6 +159,62 @@ public class DataFilter<T> {
 
 	public int size() {
 		return items.size();
+	}
+	
+	class DimensionAction<X> extends RecursiveAction {
+
+		private ValueAccessorFunktion<T, X> vaf;
+		private Dimension<X, T> dim;
+		
+		private int start = -1;
+		private int end;
+		
+		private List<T> itemList;
+		
+		public DimensionAction(ValueAccessorFunktion<T, X> vaf,
+				Dimension<X, T> dim, List<T> itemList) {
+			this.vaf = vaf;
+			this.dim = dim;
+			this.itemList = itemList;
+		}
+		
+		private DimensionAction(
+				ValueAccessorFunktion<T, X> vaf,
+				Dimension<X, T> dim, 
+				int start, 
+				int end, 
+				List<T> itemList) {
+			
+			this.vaf = vaf;
+			this.dim = dim;
+			this.start = start;
+			this.end = end;
+			this.itemList = itemList;
+		}
+		
+		@Override
+		protected void compute() {
+			if ((start != -1) && (end - start) <= parallelCollectionSize) {
+//				System.out.println(start + " - " + end);
+				for (int i = start; i <= end; i++) {
+					T value = itemList.get(i);
+					X key = vaf.value(value);
+					dim.add(key, value);
+				}
+			} else {
+				if (start == -1) {
+					start = 0;
+					end = itemList.size() - 1;
+				}
+				int range = end - start;
+				int part = range / 2;
+				
+				invokeAll(new DimensionAction<X>(vaf, dim, start, start+part, itemList),
+						new DimensionAction<X>(vaf, dim, start+part+1, end, itemList));
+			}
+			
+		}
+		
 	}
 
 }
