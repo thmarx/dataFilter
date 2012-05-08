@@ -23,7 +23,7 @@ public class DataFilter<T> {
 	 */
 	boolean synched = false;
 	/**
-	 * use the java fork/join framework
+	 * use the java fork/join framework for processing the dimensions
 	 */
 	boolean parallel = false;
 	/**

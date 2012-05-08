@@ -12,30 +12,9 @@ import org.junit.Test;
 import org.perf4j.LoggingStopWatch;
 import org.perf4j.StopWatch;
 
-public class ParallelSynchedDateFilterPerformanceTest {
+public class ParallelSynchedDateFilterPerformanceTest extends AbstractTest {
 	
-	class Person {
-		public String name;
-		public int age;
-	}
 	
-	private Person createPerson () {
-		Person p = new Person();
-		p.name = TestHelper.randomString(8);
-		p.age = TestHelper.randomInt(50);
-		
-		return p;
-	}
-	
-	private List<Person> createPersons (int count) {
-		List<Person> persons = new ArrayList<Person>();
-		
-		for (int i = 0; i < count; i++) {
-			persons.add(createPerson());
-		}
-		
-		return persons;
-	}
 	
 	@Test
 	public void testCreateDateFilter () {
