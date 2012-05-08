@@ -2,8 +2,6 @@ package net.mad.data.datafilter.dimension;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 public interface Dimension<K, V> {
 	/**
@@ -29,6 +27,23 @@ public interface Dimension<K, V> {
 	public Collection<V> filterExact (K key);
 	public Collection<V> filter (K key);
 	
+	/**
+	 * Add a element to the dimension
+	 * 
+	 * @param key
+	 * @param value
+	 */
 	public void add (K key, V value);
+	/**
+	 * Gets the value count
+	 * 
+	 * @return
+	 */
 	public int getValueCount();
+	/**
+	 * Gets the key count
+	 * @return
+	 */
+	public int getKeyCount();
+	public boolean isEmpty();
 }

@@ -1,6 +1,5 @@
 package net.mad.data.datafilter.dimension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
