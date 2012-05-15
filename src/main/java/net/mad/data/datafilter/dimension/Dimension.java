@@ -1,5 +1,7 @@
 package net.mad.data.datafilter.dimension;
 
+import net.mad.data.datafilter.function.ReturnFunction;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -26,6 +28,11 @@ public interface Dimension<K, V> {
 	 */
 	public Collection<V> filterExact (K key);
 	public Collection<V> filter (K key);
+
+	/**
+	 *
+	 */
+	public void filter (K from, K to, ReturnFunction<Collection<V>> returnFunction);
 	
 	/**
 	 * Add a element to the dimension

@@ -1,5 +1,7 @@
 package net.mad.data.datafilter.dimension;
 
+import net.mad.data.datafilter.DataFilter;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,10 +11,10 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-public class SynchedDimension<K, V> extends AbstractIndex<K, V, ConcurrentSkipListMap<K,ArrayList<V>>,ArrayList<V>> implements Dimension<K, V>{
+public class SynchedDimension<K, V> extends AbstractIndex<K, V, ConcurrentSkipListMap<K,ArrayList<V>>,ArrayList<V>> /*implements Dimension<K, V> */{
 	
-	public SynchedDimension () {
-		super(new ConcurrentSkipListMap<K, ArrayList<V>>());
+	public SynchedDimension (DataFilter<V> dataFilter) {
+		super(new ConcurrentSkipListMap<K, ArrayList<V>>(), dataFilter);
 	}
 	
 	

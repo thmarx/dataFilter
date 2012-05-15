@@ -1,5 +1,7 @@
 package net.mad.data.datafilter.dimension;
 
+import net.mad.data.datafilter.DataFilter;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,10 +10,10 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class NoSynchedDimension<K, V> extends AbstractIndex<K, V, TreeMap<K,ArrayList<V>>,ArrayList<V>> implements Dimension<K, V>{
+public class NoSynchedDimension<K, V> extends AbstractIndex<K, V, TreeMap<K,ArrayList<V>>,ArrayList<V>>/* implements Dimension<K, V>*/{
 	
-	public NoSynchedDimension () {
-		super(new TreeMap<K, ArrayList<V>>());
+	public NoSynchedDimension (DataFilter<V> dataFilter) {
+		super(new TreeMap<K, ArrayList<V>>(), dataFilter);
 	}
 	
 	
