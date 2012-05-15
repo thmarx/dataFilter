@@ -78,6 +78,36 @@ ageDim.filterExact(20);
 
 // access all persons who are between 20 and 30 years old
 ageDim.filterRange(20, 30);
+
+
+
+/*
+none blocking mode to create dimension
+*/
+df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+
+					public Integer value(Integer type) {
+						return type;
+					}
+				}, Integer.class, new ReturnFunction<Dimension<Integer, Integer>>() {
+			@Override
+			public void handle(Dimension<Integer, Integer> dimension) {
+				nameDim.filterExact("Peter");
+			}
+		}
+		);
+
+/*
+none blocking mode on filtering
+*/
+nameDim.filter("Peter", new ReturnFunction<Person>() {
+			@Override
+			public void handle(Person element) {
+				System.out.println("my name is " + element.name);
+			}
+		});
+
+
 ```
 
 Performance
