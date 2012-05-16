@@ -98,7 +98,7 @@ df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 		);
 
 /*
-none blocking mode on filtering
+none blocking mode on filtering (filterExact)
 */
 nameDim.filter("Peter", new ReturnFunction<Person>() {
 			@Override
