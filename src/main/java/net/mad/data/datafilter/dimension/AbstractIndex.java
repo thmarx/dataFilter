@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>> implements Dimension<K, V> {
+public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>>
+		implements Dimension<K, V> {
 	M map;
 
 	protected DataFilter<V> dataFilter;
@@ -19,7 +20,7 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 
 	protected abstract L createList();
 
-	public void put(K key, V value) {
+	public synchronized void put(K key, V value) {
 		L list = map.get(key);
 		if (list == null) {
 			list = createList();
@@ -93,7 +94,6 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 		return map.isEmpty();
 	}
 
-
 	public boolean containsValue(V targetValue) {
 		for (L list : map.values()) {
 			for (V value : list) {
@@ -108,8 +108,8 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 		map.clear();
 	}
 
-
-	public void filter(final K from, final K to, final ReturnFunction<Collection<V>> returnFunction) {
+	public void filter(final K from, final K to,
+			final ReturnFunction<Collection<V>> returnFunction) {
 		dataFilter.getExecutorService().execute(new Runnable() {
 			@Override
 			public void run() {
@@ -117,7 +117,9 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 			}
 		});
 	}
-	public void filter(final K key, final ReturnFunction<Collection<V>> returnFunction) {
+
+	public void filter(final K key,
+			final ReturnFunction<Collection<V>> returnFunction) {
 		dataFilter.getExecutorService().execute(new Runnable() {
 			@Override
 			public void run() {
@@ -125,6 +127,7 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 			}
 		});
 	}
+
 	public void filter(final ReturnFunction<Collection<V>> returnFunction) {
 		dataFilter.getExecutorService().execute(new Runnable() {
 			@Override

@@ -77,7 +77,8 @@ public class DataFilter<T> {
 	}
 
 	/**
-	 * @param clazz the type
+	 * @param clazz
+	 *            the type
 	 * @return
 	 */
 	public static <BT> Builder<BT> builder(Class<BT> clazz) {
@@ -86,7 +87,7 @@ public class DataFilter<T> {
 
 	/**
 	 * private constructor
-	 *
+	 * 
 	 * @param builder
 	 */
 	private DataFilter(Builder builder) {
@@ -101,7 +102,7 @@ public class DataFilter<T> {
 		executorService = Executors.newFixedThreadPool(5);
 
 		/*
-		Shutting down the ExecutorService on vm exit
+		 * Shutting down the ExecutorService on vm exit
 		 */
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
@@ -131,12 +132,12 @@ public class DataFilter<T> {
 		this.items.clear();
 	}
 
-	public ExecutorService getExecutorService () {
+	public ExecutorService getExecutorService() {
 		return this.executorService;
 	}
 
 	public <X> Dimension<X, T> dimension(ValueAccessorFunktion<T, X> vaf,
-										 Class<X> clazz) {
+			Class<X> clazz) {
 		Dimension<X, T> dim = null;
 
 		if (synched) {
@@ -148,7 +149,8 @@ public class DataFilter<T> {
 		if (parallel) {
 			ForkJoinPool pool = new ForkJoinPool();
 
-			DimensionAction<X> action = new DimensionAction<X>(vaf, dim, new ArrayList<T>(items));
+			DimensionAction<X> action = new DimensionAction<X>(vaf, dim,
+					new ArrayList<T>(items));
 			pool.invoke(action);
 
 			try {
@@ -168,12 +170,12 @@ public class DataFilter<T> {
 			}
 		}
 
-
 		return dim;
 	}
 
 	public <X> void dimension(final ValueAccessorFunktion<T, X> vaf,
-										 final Class<X> clazz, final ReturnFunction<Dimension<X, T>> returnFunction) {
+			final Class<X> clazz,
+			final ReturnFunction<Dimension<X, T>> returnFunction) {
 		executorService.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -183,7 +185,8 @@ public class DataFilter<T> {
 		});
 	}
 
-	public static <T> Collection<T> filter(Collection<T> target, FilterFunction<T> predicate) {
+	public static <T> Collection<T> filter(Collection<T> target,
+			FilterFunction<T> predicate) {
 		Collection<T> result = new ArrayList<T>();
 		for (T element : target) {
 			if (predicate.apply(element)) {
@@ -196,7 +199,9 @@ public class DataFilter<T> {
 	public Collection<T> filter(FilterFunction<T> predicate) {
 		return filter(items, predicate);
 	}
-	public void filter(final FilterFunction<T> predicate, final ReturnFunction<Collection<T>> returnFunction) {
+
+	public void filter(final FilterFunction<T> predicate,
+			final ReturnFunction<Collection<T>> returnFunction) {
 		executorService.execute(new Runnable() {
 			@Override
 			public void run() {
@@ -209,7 +214,6 @@ public class DataFilter<T> {
 			}
 		});
 	}
-
 
 	public int size() {
 		return items.size();
@@ -226,18 +230,14 @@ public class DataFilter<T> {
 		private List<T> itemList;
 
 		public DimensionAction(ValueAccessorFunktion<T, X> vaf,
-							   Dimension<X, T> dim, List<T> itemList) {
+				Dimension<X, T> dim, List<T> itemList) {
 			this.vaf = vaf;
 			this.dim = dim;
 			this.itemList = itemList;
 		}
 
-		private DimensionAction(
-				ValueAccessorFunktion<T, X> vaf,
-				Dimension<X, T> dim,
-				int start,
-				int end,
-				List<T> itemList) {
+		private DimensionAction(ValueAccessorFunktion<T, X> vaf,
+				Dimension<X, T> dim, int start, int end, List<T> itemList) {
 
 			this.vaf = vaf;
 			this.dim = dim;
@@ -251,6 +251,7 @@ public class DataFilter<T> {
 			if ((start != -1) && (end - start) <= parallelCollectionSize) {
 //				System.out.println(start + " - " + end);
 				for (int i = start; i <= end; i++) {
+//					System.out.print(i + "-");
 					T value = itemList.get(i);
 					X key = vaf.value(value);
 					dim.add(key, value);
@@ -263,8 +264,9 @@ public class DataFilter<T> {
 				int range = end - start;
 				int part = range / 2;
 
-				invokeAll(new DimensionAction<X>(vaf, dim, start, start + part, itemList),
-						new DimensionAction<X>(vaf, dim, start + part + 1, end, itemList));
+				invokeAll(new DimensionAction<X>(vaf, dim, start, start + part,
+						itemList), new DimensionAction<X>(vaf, dim, start
+						+ part + 1, end, itemList));
 			}
 
 		}

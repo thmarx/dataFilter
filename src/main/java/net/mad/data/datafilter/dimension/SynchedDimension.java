@@ -11,21 +11,30 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-public class SynchedDimension<K, V> extends AbstractIndex<K, V, ConcurrentSkipListMap<K,ArrayList<V>>,ArrayList<V>> /*implements Dimension<K, V> */{
-	
-	public SynchedDimension (DataFilter<V> dataFilter) {
+public class SynchedDimension<K, V>
+		extends
+		AbstractIndex<K, V, ConcurrentSkipListMap<K, ArrayList<V>>, ArrayList<V>> /*
+																				 * implements
+																				 * Dimension
+																				 * <
+																				 * K
+																				 * ,
+																				 * V
+																				 * >
+																				 */{
+
+	public SynchedDimension(DataFilter<V> dataFilter) {
 		super(new ConcurrentSkipListMap<K, ArrayList<V>>(), dataFilter);
 	}
-	
-	
-	public void add (K key, V value) {
+
+	public void add(K key, V value) {
 		put(key, value);
 	}
-	
-//	public int size () {
-//		return index.size();
-//	}
-	
+
+	// public int size () {
+	// return index.size();
+	// }
+
 	/**
 	 * same as dim.filter(form, to)
 	 * 
@@ -33,43 +42,50 @@ public class SynchedDimension<K, V> extends AbstractIndex<K, V, ConcurrentSkipLi
 	 * @param to
 	 * @return
 	 */
-	public Collection<V> filterRange (K from, K to) {
+	public Collection<V> filterRange(K from, K to) {
 		return filter(from, to);
 	}
-	public Collection<V> filter (K from, K to) {
+
+	public Collection<V> filter(K from, K to) {
 		Map<K, ArrayList<V>> items = map.subMap(from, true, to, true);
-		
+
 		List<V> result = new ArrayList<V>();
 		for (List<V> list : items.values()) {
 			result.addAll(list);
 		}
-		
+
 		return result;
 	}
+
 	/**
 	 * same as dim.filter();
+	 * 
 	 * @return
 	 */
-	public Collection<V> filterAll () {
+	public Collection<V> filterAll() {
 		return filter();
 	}
-	public Collection<V> filter () {
+
+	public Collection<V> filter() {
 		List<V> result = new ArrayList<V>();
 		for (List<V> list : map.values()) {
 			result.addAll(list);
 		}
-		
+
 		return result;
 	}
+
 	/**
 	 * same as dim.fitler(key);
+	 * 
 	 * @param key
 	 * @return
 	 */
-	public Collection<V> filterExact (K key) {
+	public Collection<V> filterExact(K key) {
 		return filter(key);
 	}
-	public Collection<V> filter (K key) {
+
+	public Collection<V> filter(K key) {
 		return map.get(key);
 	}
 

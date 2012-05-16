@@ -1,19 +1,26 @@
 package net.mad.data.datafilter.dimension;
 
-import java.util.ArrayList;
+import net.mad.data.datafilter.DataFilter;
+import net.mad.data.datafilter.function.ReturnFunction;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>> {
+public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>>
+		implements Dimension<K, V> {
 	M map;
 
-	public AbstractIndex(M m) {
+	protected DataFilter<V> dataFilter;
+
+	public AbstractIndex(M m, DataFilter<V> dataFilter) {
 		map = m;
+		this.dataFilter = dataFilter;
 	}
 
 	protected abstract L createList();
 
-	public void put(K key, V value) {
+	public synchronized void put(K key, V value) {
 		L list = map.get(key);
 		if (list == null) {
 			list = createList();
@@ -87,7 +94,6 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 		return map.isEmpty();
 	}
 
-	
 	public boolean containsValue(V targetValue) {
 		for (L list : map.values()) {
 			for (V value : list) {
@@ -100,5 +106,34 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 
 	public void clear() {
 		map.clear();
+	}
+
+	public void filter(final K from, final K to,
+			final ReturnFunction<Collection<V>> returnFunction) {
+		dataFilter.getExecutorService().execute(new Runnable() {
+			@Override
+			public void run() {
+				returnFunction.handle(filter(from, to));
+			}
+		});
+	}
+
+	public void filter(final K key,
+			final ReturnFunction<Collection<V>> returnFunction) {
+		dataFilter.getExecutorService().execute(new Runnable() {
+			@Override
+			public void run() {
+				returnFunction.handle(filter(key));
+			}
+		});
+	}
+
+	public void filter(final ReturnFunction<Collection<V>> returnFunction) {
+		dataFilter.getExecutorService().execute(new Runnable() {
+			@Override
+			public void run() {
+				returnFunction.handle(filterAll());
+			}
+		});
 	}
 }

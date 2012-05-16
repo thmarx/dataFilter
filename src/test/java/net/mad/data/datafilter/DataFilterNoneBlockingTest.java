@@ -20,7 +20,8 @@ public class DataFilterNoneBlockingTest {
 
 	@Test
 	public void testAddRemove() {
-		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class)
+				.synched(false).build();
 
 		df.add(1);
 
@@ -38,7 +39,8 @@ public class DataFilterNoneBlockingTest {
 		items.add(2);
 		items.add(3);
 
-		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class)
+				.synched(false).build();
 
 		df.addAll(items);
 		assertEquals(3, df.size());
@@ -54,24 +56,23 @@ public class DataFilterNoneBlockingTest {
 		items.add(2);
 		items.add(3);
 
-		DataFilter<Integer> df = DataFilter.builder(Integer.class).synched(false).build();
+		DataFilter<Integer> df = DataFilter.builder(Integer.class)
+				.synched(false).build();
 		df.addAll(items);
-
 
 		df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
 
-					public Integer value(Integer type) {
-						return type;
-					}
-				}, Integer.class, new ReturnFunction<Dimension<Integer, Integer>>() {
+			public Integer value(Integer type) {
+				return type;
+			}
+		}, Integer.class, new ReturnFunction<Dimension<Integer, Integer>>() {
 			@Override
 			public void handle(Dimension<Integer, Integer> dimension) {
 				assertNotNull(dimension);
 
 				assertEquals(3, dimension.getValueCount());
 			}
-		}
-		);
+		});
 	}
 
 }
