@@ -40,7 +40,7 @@ public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>
 		return list.get(index);
 	}
 
-	public V remove(K key, int index) {
+	public synchronized V remove(K key, int index) {
 		L list = map.get(key);
 		if (list == null) {
 			return null;
