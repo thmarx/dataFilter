@@ -1,16 +1,17 @@
 package net.mad.data.datafilter;
 
-import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.function.ReturnFunction;
-import net.mad.data.datafilter.function.ValueFunktion;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import net.mad.data.datafilter.dimension.Dimension;
+import net.mad.data.datafilter.function.ReturnFunction;
+import net.mad.data.datafilter.function.ValueFunktion;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class DataFilterNoneBlockingTest {
 

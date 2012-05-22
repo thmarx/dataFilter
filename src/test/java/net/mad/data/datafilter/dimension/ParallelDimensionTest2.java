@@ -1,14 +1,11 @@
 package net.mad.data.datafilter.dimension;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.mad.data.datafilter.AbstractTest;
 import net.mad.data.datafilter.DataFilter;
-import net.mad.data.datafilter.dimension.Dimension;
 import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;

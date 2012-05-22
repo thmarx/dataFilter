@@ -1,9 +1,8 @@
 package net.mad.data.datafilter.dimension;
 
-import net.mad.data.datafilter.function.ReturnFunction;
-
-import java.util.ArrayList;
 import java.util.Collection;
+
+import net.mad.data.datafilter.function.ReturnFunction;
 
 public interface Dimension<K, V> {
 	/**

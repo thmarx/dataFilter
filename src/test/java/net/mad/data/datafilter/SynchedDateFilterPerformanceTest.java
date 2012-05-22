@@ -1,11 +1,8 @@
 package net.mad.data.datafilter;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.dimension.NoSynchedDimension;
 import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.Test;

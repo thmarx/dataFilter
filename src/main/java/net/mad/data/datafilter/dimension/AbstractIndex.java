@@ -1,13 +1,15 @@
 package net.mad.data.datafilter.dimension;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
+
 import net.mad.data.datafilter.DataFilter;
 import net.mad.data.datafilter.function.ReturnFunction;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.NavigableMap;
-
-public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extends List<V>>
+public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		implements Dimension<K, V> {
 	M map;
 
@@ -18,10 +20,10 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 		this.dataFilter = dataFilter;
 	}
 
-	protected abstract L createList();
+	protected abstract List<V> createList();
 
 	public synchronized void put(K key, V value) {
-		L list = map.get(key);
+		List<V> list = map.get(key);
 		if (list == null) {
 			list = createList();
 			map.put(key, list);
@@ -30,7 +32,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 	}
 
 	public V get(K key, int index) {
-		L list = map.get(key);
+		List<V> list = map.get(key);
 		if (list == null) {
 			return null;
 		}
@@ -41,7 +43,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 	}
 
 	public synchronized V remove(K key, int index) {
-		L list = map.get(key);
+		List<V> list = map.get(key);
 		if (list == null) {
 			return null;
 		}
@@ -57,14 +59,14 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 
 	public int getValueCount() {
 		int size = 0;
-		for (L list : map.values()) {
+		for (List<V> list : map.values()) {
 			size += list.size();
 		}
 		return size;
 	}
 
 	public int getValueCount(K key) {
-		L list = map.get(key);
+		List<V> list = map.get(key);
 		if (list == null) {
 			return 0;
 		}
@@ -80,7 +82,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 	}
 
 	public boolean containsKey(K key, int index) {
-		L list = map.get(key);
+		List<V> list = map.get(key);
 		if (list == null) {
 			return false;
 		}
@@ -95,7 +97,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 	}
 
 	public boolean containsValue(V targetValue) {
-		for (L list : map.values()) {
+		for (List<V> list : map.values()) {
 			for (V value : list) {
 				if (targetValue == value)
 					return true;
@@ -135,5 +137,67 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extend
 				returnFunction.handle(filterAll());
 			}
 		});
+	}
+	
+	public void add(K key, V value) {
+		put(key, value);
+	}
+
+	// public int size () {
+	// return index.size();
+	// }
+
+	/**
+	 * same as dim.filter(form, to)
+	 * 
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public Collection<V> filterRange(K from, K to) {
+		return filter(from, to);
+	}
+
+	public Collection<V> filter(K from, K to) {
+		Map<K, List<V>> items = map.subMap(from, true, to, true);
+
+		List<V> result = new ArrayList<V>();
+		for (List<V> list : items.values()) {
+			result.addAll(list);
+		}
+
+		return result;
+	}
+
+	/**
+	 * same as dim.filter();
+	 * 
+	 * @return
+	 */
+	public Collection<V> filterAll() {
+		return filter();
+	}
+
+	public Collection<V> filter() {
+		List<V> result = new ArrayList<V>();
+		for (List<V> list : map.values()) {
+			result.addAll(list);
+		}
+
+		return result;
+	}
+
+	/**
+	 * same as dim.fitler(key);
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public Collection<V> filterExact(K key) {
+		return filter(key);
+	}
+
+	public Collection<V> filter(K key) {
+		return map.get(key);
 	}
 }

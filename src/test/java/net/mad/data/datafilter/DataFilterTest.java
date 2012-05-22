@@ -1,12 +1,12 @@
 package net.mad.data.datafilter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.dimension.NoSynchedDimension;
 import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
