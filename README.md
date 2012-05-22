@@ -20,13 +20,13 @@ Maven dependency:
 <dependency>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.6</version>
+	<version>0.7</version>
 </dependency>
 <!-- java 6 -->
 <dependency>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter6</artifactId>
-	<version>0.6</version>
+	<version>0.7</version>
 </dependency>
 ```
 
@@ -54,7 +54,7 @@ personFilter.addAll(personCollection);
 /* 
 create dimension for the name attribute of the person class
 */
-Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunktion<Person, String>() {
+Dimension<String, Person> nameDim = personFilter.dimension(new ValueFunktion<Person, String>() {
 	public String value(Person type) {
 		return type.name;
 	}
@@ -63,7 +63,7 @@ Dimension<String, Person> nameDim = personFilter.dimension(new ValueAccessorFunk
 /* 
 create dimension for the age attribute of the person class
 */
-Dimension<Integer, Person> ageDim = personFilter.dimension(new ValueAccessorFunktion<Person, Integer>() {
+Dimension<Integer, Person> ageDim = personFilter.dimension(new ValueFunktion<Person, Integer>() {
 	public Integer value(Person type) {
 		return type.age;
 	}
@@ -84,7 +84,7 @@ ageDim.filterRange(20, 30);
 /*
 none blocking mode to create dimension
 */
-df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+df.dimension(new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
