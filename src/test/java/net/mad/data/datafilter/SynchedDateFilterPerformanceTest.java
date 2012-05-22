@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.mad.data.datafilter.dimension.Dimension;
 import net.mad.data.datafilter.dimension.NoSynchedDimension;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.Test;
 import org.perf4j.LoggingStopWatch;
@@ -39,7 +39,7 @@ public class SynchedDateFilterPerformanceTest extends AbstractTest {
 				"testCreateNameDimesion_1000");
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -61,7 +61,7 @@ public class SynchedDateFilterPerformanceTest extends AbstractTest {
 				"testCreateNameDimesion_10000");
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -83,7 +83,7 @@ public class SynchedDateFilterPerformanceTest extends AbstractTest {
 				"testCreateNameDimesion_100000");
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -105,7 +105,7 @@ public class SynchedDateFilterPerformanceTest extends AbstractTest {
 				"testCreateNameDimesion_500000");
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -127,7 +127,7 @@ public class SynchedDateFilterPerformanceTest extends AbstractTest {
 				"testCreateNameDimesion_1000000");
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;

@@ -9,7 +9,7 @@ import java.util.List;
 import net.mad.data.datafilter.AbstractTest;
 import net.mad.data.datafilter.DataFilter;
 import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,7 +37,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		DataFilter.builder(Integer.class).build();
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
@@ -60,7 +60,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		assertTrue(ordered(filtered, new int[] { 2, 3, 4 }));
 
 		df.add(3);
-		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
 			public Integer value(Integer type) {
 				return type;
@@ -87,7 +87,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
@@ -99,7 +99,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		assertTrue(contains(filtered, new int[] { 1 }));
 
 		df.add(3);
-		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
 			public Integer value(Integer type) {
 				return type;
@@ -124,7 +124,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
@@ -148,7 +148,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -167,7 +167,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -186,7 +186,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -205,7 +205,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;
@@ -224,7 +224,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;

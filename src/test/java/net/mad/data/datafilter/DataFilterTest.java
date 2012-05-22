@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import net.mad.data.datafilter.dimension.Dimension;
 import net.mad.data.datafilter.dimension.NoSynchedDimension;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -61,7 +61,7 @@ public class DataFilterTest {
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;

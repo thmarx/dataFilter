@@ -5,9 +5,9 @@ import net.mad.data.datafilter.function.ReturnFunction;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.NavigableMap;
 
-public abstract class AbstractIndex<K, V, M extends Map<K, L>, L extends List<V>>
+public abstract class AbstractIndex<K, V, M extends NavigableMap<K, L>, L extends List<V>>
 		implements Dimension<K, V> {
 	M map;
 

@@ -2,7 +2,7 @@ package net.mad.data.datafilter;
 
 import net.mad.data.datafilter.dimension.Dimension;
 import net.mad.data.datafilter.function.ReturnFunction;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -60,7 +60,7 @@ public class DataFilterNoneBlockingTest {
 				.synched(false).build();
 		df.addAll(items);
 
-		df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+		df.dimension(new ValueFunktion<Integer, Integer>() {
 
 			public Integer value(Integer type) {
 				return type;

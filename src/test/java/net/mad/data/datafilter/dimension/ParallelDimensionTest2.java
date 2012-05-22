@@ -9,7 +9,7 @@ import java.util.List;
 import net.mad.data.datafilter.AbstractTest;
 import net.mad.data.datafilter.DataFilter;
 import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class ParallelDimensionTest2 extends AbstractTest {
 		personFilter.addAll(persons);
 
 		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueAccessorFunktion<Person, String>() {
+				new ValueFunktion<Person, String>() {
 
 					public String value(Person type) {
 						return type.name;

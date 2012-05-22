@@ -15,7 +15,7 @@ import net.mad.data.datafilter.dimension.NoSynchedDimension;
 import net.mad.data.datafilter.dimension.SynchedDimension;
 import net.mad.data.datafilter.function.FilterFunction;
 import net.mad.data.datafilter.function.ReturnFunction;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 public class DataFilter<T> {
 
@@ -136,7 +136,7 @@ public class DataFilter<T> {
 		return this.executorService;
 	}
 
-	public <X> Dimension<X, T> dimension(ValueAccessorFunktion<T, X> vaf,
+	public <X> Dimension<X, T> dimension(ValueFunktion<T, X> vaf,
 			Class<X> clazz) {
 		Dimension<X, T> dim = null;
 
@@ -173,7 +173,7 @@ public class DataFilter<T> {
 		return dim;
 	}
 
-	public <X> void dimension(final ValueAccessorFunktion<T, X> vaf,
+	public <X> void dimension(final ValueFunktion<T, X> vaf,
 			final Class<X> clazz,
 			final ReturnFunction<Dimension<X, T>> returnFunction) {
 		executorService.execute(new Runnable() {
@@ -221,7 +221,7 @@ public class DataFilter<T> {
 
 	class DimensionAction<X> extends RecursiveAction {
 
-		private ValueAccessorFunktion<T, X> vaf;
+		private ValueFunktion<T, X> vaf;
 		private Dimension<X, T> dim;
 
 		private int start = -1;
@@ -229,14 +229,14 @@ public class DataFilter<T> {
 
 		private List<T> itemList;
 
-		public DimensionAction(ValueAccessorFunktion<T, X> vaf,
+		public DimensionAction(ValueFunktion<T, X> vaf,
 				Dimension<X, T> dim, List<T> itemList) {
 			this.vaf = vaf;
 			this.dim = dim;
 			this.itemList = itemList;
 		}
 
-		private DimensionAction(ValueAccessorFunktion<T, X> vaf,
+		private DimensionAction(ValueFunktion<T, X> vaf,
 				Dimension<X, T> dim, int start, int end, List<T> itemList) {
 
 			this.vaf = vaf;

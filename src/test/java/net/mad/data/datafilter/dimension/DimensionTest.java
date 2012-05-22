@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import net.mad.data.datafilter.DataFilter;
 import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.function.ValueAccessorFunktion;
+import net.mad.data.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -33,7 +33,7 @@ public class DimensionTest {
 		DataFilter.builder(Integer.class).build();
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
@@ -56,7 +56,7 @@ public class DimensionTest {
 		assertTrue(ordered(filtered, new int[] { 2, 3, 4 }));
 
 		df.add(3);
-		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
 			public Integer value(Integer type) {
 				return type;
@@ -83,7 +83,7 @@ public class DimensionTest {
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
@@ -95,7 +95,7 @@ public class DimensionTest {
 		assertTrue(contains(filtered, new int[] { 1 }));
 
 		df.add(3);
-		dimInt = df.dimension(new ValueAccessorFunktion<Integer, Integer>() {
+		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
 			public Integer value(Integer type) {
 				return type;
@@ -120,7 +120,7 @@ public class DimensionTest {
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueAccessorFunktion<Integer, Integer>() {
+				new ValueFunktion<Integer, Integer>() {
 
 					public Integer value(Integer type) {
 						return type;
