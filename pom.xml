@@ -4,6 +4,7 @@
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
 	<version>0.7</version>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,11 +22,6 @@
 			<artifactId>perf4j</artifactId>
 			<version>0.9.16</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>12.0</version>
 		</dependency>
 	</dependencies>
 	<scm>
@@ -87,4 +83,44 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<properties>
+				<maven.build.timestamp.format>yyyyMMdd_HHmm</maven.build.timestamp.format>
+				<buildNumber>${maven.build.timestamp}</buildNumber>
+			</properties>
+			<build>
+				<finalName>${project.artifactId}-${project.version}.r${buildNumber}</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-install-plugin</artifactId>
+						<version>2.3.1</version>
+
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>install-file</goal>
+								</goals>
+								<configuration>
+									<artifactId>${project.artifactId}</artifactId>
+									<groupId>${project.groupId}</groupId>
+									<generatePom>true</generatePom>
+									<version>${project.version}.r${buildNumber}</version>
+									<createChecksum>true</createChecksum>
+									<packaging>jar</packaging>
+									<file>target/${project.artifactId}-${project.version}.r${buildNumber}.jar</file>
+									<javadoc>target/${project.artifactId}-${project.version}.r${buildNumber}-javadoc.jar</javadoc>
+									<source>target/${project.artifactId}-${project.version}.r${buildNumber}-sources.jar</source>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
