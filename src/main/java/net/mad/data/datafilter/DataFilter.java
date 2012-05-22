@@ -90,7 +90,7 @@ public class DataFilter<T> {
 	 * 
 	 * @param builder
 	 */
-	private DataFilter(Builder builder) {
+	private DataFilter(Builder<T> builder) {
 		this.synched = builder.synched;
 		this.parallel = builder.parallel;
 
@@ -185,7 +185,7 @@ public class DataFilter<T> {
 		});
 	}
 
-	public static <T> Collection<T> filter(Collection<T> target,
+	private static <T> Collection<T> filter(Collection<T> target,
 			FilterFunction<T> predicate) {
 		Collection<T> result = new ArrayList<T>();
 		for (T element : target) {

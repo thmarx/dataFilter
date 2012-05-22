@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.mad.data</groupId>
 	<artifactId>datafilter</artifactId>
-	<version>0.7</version>
+	<version>0.8.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -84,7 +84,9 @@
 		</plugins>
 	</build>
 
+	<!--
 	<profiles>
+	
 		<profile>
 			<id>release</id>
 			<properties>
@@ -122,5 +124,7 @@
 				</plugins>
 			</build>
 		</profile>
+	
 	</profiles>
+	-->
 </project>
