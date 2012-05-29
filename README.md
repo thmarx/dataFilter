@@ -100,10 +100,10 @@ df.dimension(new ValueFunktion<Integer, Integer>() {
 /*
 none blocking mode on filtering (filterExact)
 */
-nameDim.filter("Peter", new ReturnFunction<Person>() {
+nameDim.filter("Peter", new ReturnFunction<Collection<Person>>() {
 			@Override
-			public void handle(Person element) {
-				System.out.println("my name is " + element.name);
+			public void handle(Collection<Person> elements) {
+				...
 			}
 		});
 
