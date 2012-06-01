@@ -84,14 +84,14 @@ ageDim.filterRange(20, 30);
 /*
 none blocking mode to create dimension
 */
-df.dimension(new ValueFunktion<Integer, Integer>() {
+df.dimension(new ValueFunktion<Person, String>() {
 
-					public Integer value(Integer type) {
-						return type;
+					public String value(Person type) {
+						return type.name;
 					}
-				}, Integer.class, new ReturnFunction<Dimension<Integer, Integer>>() {
+				}, Integer.class, new ReturnFunction<Dimension<String, Person>>() {
 			@Override
-			public void handle(Dimension<Integer, Integer> dimension) {
+			public void handle(Dimension<String, Person> dimension) {
 				nameDim.filterExact("Peter");
 			}
 		}
