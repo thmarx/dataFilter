@@ -7,3 +7,5 @@
 /datafilter.iml
 /datafilter.ipr
 /datafilter.iws
+/.gradle
+/build
