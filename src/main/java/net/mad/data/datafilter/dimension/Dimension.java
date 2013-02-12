@@ -1,6 +1,7 @@
 package net.mad.data.datafilter.dimension;
 
 import java.util.Collection;
+import java.util.Set;
 
 import net.mad.data.datafilter.function.ReturnFunction;
 
@@ -62,6 +63,8 @@ public interface Dimension<K, V> {
 	 * @return
 	 */
 	public int getKeyCount();
+	
+	public Set<K> keys();
 
 	public boolean isEmpty();
 }

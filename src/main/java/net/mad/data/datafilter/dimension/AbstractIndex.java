@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.Set;
 
 import net.mad.data.datafilter.DataFilter;
 import net.mad.data.datafilter.function.ReturnFunction;
@@ -199,5 +200,9 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 
 	public Collection<V> filter(K key) {
 		return map.get(key);
+	}
+	
+	public Set<K> keys () {
+		return map.keySet();
 	}
 }

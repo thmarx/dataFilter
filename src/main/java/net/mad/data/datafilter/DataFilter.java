@@ -99,7 +99,7 @@ public class DataFilter<T> {
 		} else {
 			items = new ArrayList<T>();
 		}
-		executorService = Executors.newFixedThreadPool(5);
+		executorService = Executors.newFixedThreadPool(1);
 
 		/*
 		 * Shutting down the ExecutorService on vm exit
