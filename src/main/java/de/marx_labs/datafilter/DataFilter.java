@@ -1,4 +1,4 @@
-package net.mad.data.datafilter;
+package de.marx_labs.datafilter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,12 +10,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.dimension.NoSynchedDimension;
-import net.mad.data.datafilter.dimension.SynchedDimension;
-import net.mad.data.datafilter.function.FilterFunction;
-import net.mad.data.datafilter.function.ReturnFunction;
-import net.mad.data.datafilter.function.ValueFunktion;
+import de.marx_labs.datafilter.dimension.Dimension;
+import de.marx_labs.datafilter.dimension.NoSynchedDimension;
+import de.marx_labs.datafilter.dimension.SynchedDimension;
+import de.marx_labs.datafilter.function.FilterFunction;
+import de.marx_labs.datafilter.function.ReturnFunction;
+import de.marx_labs.datafilter.function.ValueFunktion;
 
 public class DataFilter<T> {
 

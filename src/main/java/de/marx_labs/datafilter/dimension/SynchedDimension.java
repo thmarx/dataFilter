@@ -1,11 +1,11 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import net.mad.data.datafilter.DataFilter;
+import de.marx_labs.datafilter.DataFilter;
 
 public class SynchedDimension<K, V>
 		extends

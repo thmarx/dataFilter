@@ -1,12 +1,12 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import net.mad.data.datafilter.AbstractTest;
-import net.mad.data.datafilter.DataFilter;
-import net.mad.data.datafilter.function.ValueFunktion;
+import de.marx_labs.datafilter.AbstractTest;
+import de.marx_labs.datafilter.DataFilter;
+import de.marx_labs.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;

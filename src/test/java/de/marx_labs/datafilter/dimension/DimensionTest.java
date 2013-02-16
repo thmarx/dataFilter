@@ -1,20 +1,18 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import net.mad.data.datafilter.AbstractTest;
-import net.mad.data.datafilter.DataFilter;
-import net.mad.data.datafilter.function.ValueFunktion;
+import de.marx_labs.datafilter.DataFilter;
+import de.marx_labs.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ParallelDimensionTest extends AbstractTest {
+public class DimensionTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,7 +28,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		items.add(5);
 
 		DataFilter<Integer> df = DataFilter.builder(Integer.class)
-				.parallel(true).build();
+				.synched(false).build();
 		df.addAll(items);
 		DataFilter.builder(Integer.class).build();
 
@@ -81,7 +79,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		items.add(5);
 
 		DataFilter<Integer> df = DataFilter.builder(Integer.class)
-				.parallel(true).build();
+				.synched(false).build();
 		df.addAll(items);
 
 		Dimension<Integer, Integer> dimInt = df.dimension(
@@ -133,103 +131,6 @@ public class ParallelDimensionTest extends AbstractTest {
 		assertEquals(5, filtered.size());
 		assertTrue(contains(filtered, new int[] { 1, 2, 3, 4, 5 }));
 		assertTrue(ordered(filtered, new int[] { 1, 2, 3, 4, 5 }));
-	}
-
-	
-	
-	@Test
-	public void testCreateNameDimesion_1000() {
-
-		List<Person> persons = createPersons(1000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class)
-				.parallel(true).synched(true).build();
-		personFilter.addAll(persons);
-
-		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueFunktion<Person, String>() {
-
-					public String value(Person type) {
-						return type.name;
-					}
-				}, String.class);
-
-		assertEquals(1000, nameDim.getValueCount());
-	}
-
-	@Test
-	public void testCreateNameDimesion_10000() {
-
-		List<Person> persons = createPersons(10000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class)
-				.parallel(true).synched(true).build();
-		personFilter.addAll(persons);
-
-		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueFunktion<Person, String>() {
-
-					public String value(Person type) {
-						return type.name;
-					}
-				}, String.class);
-
-		assertEquals(10000, nameDim.getValueCount());
-	}
-
-	@Test
-	public void testCreateNameDimesion_100000() {
-
-		List<Person> persons = createPersons(100000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class)
-				.parallel(true).synched(true).build();
-		personFilter.addAll(persons);
-
-		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueFunktion<Person, String>() {
-
-					public String value(Person type) {
-						return type.name;
-					}
-				}, String.class);
-
-		assertEquals(100000, nameDim.getValueCount());
-	}
-
-	@Test
-	public void testCreateNameDimesion_500000() {
-
-		List<Person> persons = createPersons(500000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class)
-				.parallel(true).synched(true).build();
-		personFilter.addAll(persons);
-
-		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueFunktion<Person, String>() {
-
-					public String value(Person type) {
-						return type.name;
-					}
-				}, String.class);
-
-		assertEquals(500000, nameDim.getValueCount());
-	}
-
-	@Test
-	public void testCreateNameDimesion_1000000() {
-
-		List<Person> persons = createPersons(1000000);
-		DataFilter<Person> personFilter = DataFilter.builder(Person.class)
-				.parallel(true).synched(true).build();
-		personFilter.addAll(persons);
-
-		Dimension<String, Person> nameDim = personFilter.dimension(
-				new ValueFunktion<Person, String>() {
-
-					public String value(Person type) {
-						return type.name;
-					}
-				}, String.class);
-
-		assertEquals(1000000, nameDim.getValueCount());
 	}
 
 	private boolean contains(Collection<Integer> toTest, int[] cList) {

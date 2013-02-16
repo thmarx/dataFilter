@@ -1,4 +1,4 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.Set;
 
-import net.mad.data.datafilter.DataFilter;
-import net.mad.data.datafilter.function.ReturnFunction;
+import de.marx_labs.datafilter.DataFilter;
+import de.marx_labs.datafilter.function.ReturnFunction;
 
 public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		implements Dimension<K, V> {

@@ -1,4 +1,4 @@
-package net.mad.data.datafilter.function;
+package de.marx_labs.datafilter.function;
 
 /**
  * 

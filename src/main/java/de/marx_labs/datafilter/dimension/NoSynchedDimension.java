@@ -1,10 +1,10 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import net.mad.data.datafilter.DataFilter;
+import de.marx_labs.datafilter.DataFilter;
 
 public class NoSynchedDimension<K, V> extends
 		AbstractIndex<K, V, TreeMap<K, List<V>>> {

@@ -1,9 +1,9 @@
-package net.mad.data.datafilter.dimension;
+package de.marx_labs.datafilter.dimension;
 
 import java.util.Collection;
 import java.util.Set;
 
-import net.mad.data.datafilter.function.ReturnFunction;
+import de.marx_labs.datafilter.function.ReturnFunction;
 
 public interface Dimension<K, V> {
 	/**

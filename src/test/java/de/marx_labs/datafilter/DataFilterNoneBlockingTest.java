@@ -1,4 +1,4 @@
-package net.mad.data.datafilter;
+package de.marx_labs.datafilter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -6,13 +6,14 @@ import static org.junit.Assert.assertNotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.mad.data.datafilter.dimension.Dimension;
-import net.mad.data.datafilter.function.ValueFunktion;
+import de.marx_labs.datafilter.dimension.Dimension;
+import de.marx_labs.datafilter.function.ReturnFunction;
+import de.marx_labs.datafilter.function.ValueFunktion;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class DataFilterTest {
+public class DataFilterNoneBlockingTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -60,17 +61,19 @@ public class DataFilterTest {
 				.synched(false).build();
 		df.addAll(items);
 
-		Dimension<Integer, Integer> dimInt = df.dimension(
-				new ValueFunktion<Integer, Integer>() {
+		df.dimension(new ValueFunktion<Integer, Integer>() {
 
-					public Integer value(Integer type) {
-						return type;
-					}
-				}, Integer.class);
+			public Integer value(Integer type) {
+				return type;
+			}
+		}, Integer.class, new ReturnFunction<Dimension<Integer, Integer>>() {
+			@Override
+			public void handle(Dimension<Integer, Integer> dimension) {
+				assertNotNull(dimension);
 
-		assertNotNull(dimInt);
-
-		assertEquals(3, dimInt.getValueCount());
+				assertEquals(3, dimension.getValueCount());
+			}
+		});
 	}
 
 }

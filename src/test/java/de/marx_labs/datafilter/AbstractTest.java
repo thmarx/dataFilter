@@ -1,4 +1,4 @@
-package net.mad.data.datafilter;
+package de.marx_labs.datafilter;
 
 import java.util.ArrayList;
 import java.util.List;
