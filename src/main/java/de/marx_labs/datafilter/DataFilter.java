@@ -112,22 +112,37 @@ public class DataFilter<T> {
 		});
 	}
 
+	/**
+	 * Add a single item to the datafilter.
+	 * @param item
+	 */
 	public void add(T item) {
 		items.add(item);
 	}
-
+	/**
+	 * Remove a single item from the datafilter
+	 * @param item
+	 */
 	public void remove(T item) {
 		items.remove(item);
 	}
-
+	/**
+	 * Add a collection of items to the datafilter
+	 * @param items
+	 */
 	public void addAll(Collection<T> items) {
 		this.items.addAll(items);
 	}
-
+	/**
+	 * Remove a collection if items from the datafilter
+	 * @param items
+	 */
 	public void removeAll(Collection<T> items) {
 		this.items.removeAll(items);
 	}
-
+	/**
+	 * Clear the items.
+	 */
 	public void clear() {
 		this.items.clear();
 	}
@@ -136,6 +151,13 @@ public class DataFilter<T> {
 		return this.executorService;
 	}
 
+	/**
+	 * Create a new dimension for the data in the datafilter
+	 * 
+	 * @param vaf
+	 * @param clazz
+	 * @return
+	 */
 	public <X> Dimension<X, T> dimension(ValueFunktion<T, X> vaf,
 			Class<X> clazz) {
 		Dimension<X, T> dim = null;
