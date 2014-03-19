@@ -2,21 +2,6 @@ dataFilter
 ==========
 
 
-changes for version 0.8.0
-
-1. semantic version number
-
-2. groupid and java package changed
-
-``` xml
-<!-- java 7 -->
-<dependency>
-	<groupId>de.marx-labs</groupId>
-	<artifactId>datafilter</artifactId>
-	<version>0.8.0</version>
-</dependency>
-```
-
 Usage
 -----
 
