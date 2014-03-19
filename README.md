@@ -1,34 +1,6 @@
 dataFilter
 ==========
 
-Maven repository
----------
-
-``` xml
-<repository>
-	<id>marx-labs</id>
-	<name>marx-labs components</name>
-	<url>http://marx-labs.googlecode.com/svn/repo/</url>
-</repository>
-```
-
-
-Maven dependency: 
--------------
-``` xml
-<!-- java 7 -->
-<dependency>
-	<groupId>net.mad.data</groupId>
-	<artifactId>datafilter</artifactId>
-	<version>0.7</version>
-</dependency>
-<!-- java 6 -->
-<dependency>
-	<groupId>net.mad.data</groupId>
-	<artifactId>datafilter6</artifactId>
-	<version>0.7</version>
-</dependency>
-```
 
 changes for version 0.8.0
 1. semantic version number
