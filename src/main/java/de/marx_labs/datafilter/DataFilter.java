@@ -72,7 +72,7 @@ public class DataFilter<T> {
 			if (parallel && !synched) {
 				throw new IllegalArgumentException("");
 			}
-			return new DataFilter<T>(this);
+			return new DataFilter<>(this);
 		}
 	}
 
@@ -91,13 +91,13 @@ public class DataFilter<T> {
 	 * @param builder
 	 */
 	private DataFilter(Builder<T> builder) {
-		this.synched = builder.synched;
-		this.parallel = builder.parallel;
+        this.parallel = builder.parallel;
+		this.synched = builder.synched || builder.parallel;
 
 		if (this.synched) {
 			items = Collections.synchronizedCollection(new ArrayList<T>());
 		} else {
-			items = new ArrayList<T>();
+			items = new ArrayList<>();
 		}
 		executorService = Executors.newFixedThreadPool(1);
 
@@ -154,6 +154,7 @@ public class DataFilter<T> {
 	/**
 	 * Create a new dimension for the data in the datafilter
 	 * 
+     * @param <X>
 	 * @param vaf
 	 * @param clazz
 	 * @return
@@ -163,23 +164,21 @@ public class DataFilter<T> {
 		Dimension<X, T> dim = null;
 
 		if (synched) {
-			dim = new SynchedDimension<X, T>(this);
+			dim = new SynchedDimension<>(this);
 		} else {
-			dim = new NoSynchedDimension<X, T>(this);
+			dim = new NoSynchedDimension<>(this);
 		}
 
 		if (parallel) {
 			ForkJoinPool pool = new ForkJoinPool();
 
-			DimensionAction<X> action = new DimensionAction<X>(vaf, dim,
-					new ArrayList<T>(items));
+			DimensionAction<X> action = new DimensionAction<>(vaf, dim,
+					new ArrayList<>(items));
 			pool.invoke(action);
 
 			try {
 				action.get();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
+			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			} finally {
 				pool.shutdown();
@@ -209,7 +208,7 @@ public class DataFilter<T> {
 
 	private static <T> Collection<T> filter(Collection<T> target,
 			FilterFunction<T> predicate) {
-		Collection<T> result = new ArrayList<T>();
+		Collection<T> result = new ArrayList<>();
 		for (T element : target) {
 			if (predicate.apply(element)) {
 				result.add(element);
@@ -227,7 +226,7 @@ public class DataFilter<T> {
 		executorService.execute(new Runnable() {
 			@Override
 			public void run() {
-				Collection<T> result = new ArrayList<T>();
+				Collection<T> result = new ArrayList<>();
 				for (T element : items) {
 					if (predicate.apply(element)) {
 						result.add(element);
@@ -249,7 +248,7 @@ public class DataFilter<T> {
 		private int start = -1;
 		private int end;
 
-		private List<T> itemList;
+		private final List<T> itemList;
 
 		public DimensionAction(ValueFunktion<T, X> vaf,
 				Dimension<X, T> dim, List<T> itemList) {
@@ -286,8 +285,8 @@ public class DataFilter<T> {
 				int range = end - start;
 				int part = range / 2;
 
-				invokeAll(new DimensionAction<X>(vaf, dim, start, start + part,
-						itemList), new DimensionAction<X>(vaf, dim, start
+				invokeAll(new DimensionAction<>(vaf, dim, start, start + part,
+						itemList), new DimensionAction<>(vaf, dim, start
 						+ part + 1, end, itemList));
 			}
 
