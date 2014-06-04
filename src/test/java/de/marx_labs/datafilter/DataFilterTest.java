@@ -34,7 +34,7 @@ public class DataFilterTest {
 
 	@Test
 	public void testAddAllRemoveAll() {
-		Collection<Integer> items = new ArrayList<Integer>();
+		Collection<Integer> items = new ArrayList<>();
 		items.add(1);
 		items.add(2);
 		items.add(3);

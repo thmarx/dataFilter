@@ -22,7 +22,7 @@ public class ParallelDimensionTest extends AbstractTest {
 
 	@Test
 	public void testFilterRange() {
-		Collection<Integer> items = new ArrayList<Integer>();
+		Collection<Integer> items = new ArrayList<>();
 		items.add(1);
 		items.add(2);
 		items.add(3);
@@ -37,6 +37,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<Integer, Integer> dimInt = df.dimension(
 				new ValueFunktion<Integer, Integer>() {
 
+                    @Override
 					public Integer value(Integer type) {
 						return type;
 					}
@@ -60,6 +61,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		df.add(3);
 		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
+            @Override
 			public Integer value(Integer type) {
 				return type;
 			}
@@ -73,7 +75,7 @@ public class ParallelDimensionTest extends AbstractTest {
 
 	@Test
 	public void testFilterExact() {
-		Collection<Integer> items = new ArrayList<Integer>();
+		Collection<Integer> items = new ArrayList<>();
 		items.add(1);
 		items.add(2);
 		items.add(3);
@@ -87,6 +89,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<Integer, Integer> dimInt = df.dimension(
 				new ValueFunktion<Integer, Integer>() {
 
+                    @Override
 					public Integer value(Integer type) {
 						return type;
 					}
@@ -99,6 +102,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		df.add(3);
 		dimInt = df.dimension(new ValueFunktion<Integer, Integer>() {
 
+            @Override
 			public Integer value(Integer type) {
 				return type;
 			}
@@ -111,7 +115,7 @@ public class ParallelDimensionTest extends AbstractTest {
 
 	@Test
 	public void testFilterAll() {
-		Collection<Integer> items = new ArrayList<Integer>();
+		Collection<Integer> items = new ArrayList<>();
 		items.add(1);
 		items.add(2);
 		items.add(3);
@@ -124,6 +128,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<Integer, Integer> dimInt = df.dimension(
 				new ValueFunktion<Integer, Integer>() {
 
+                    @Override
 					public Integer value(Integer type) {
 						return type;
 					}
@@ -148,6 +153,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<String, Person> nameDim = personFilter.dimension(
 				new ValueFunktion<Person, String>() {
 
+                    @Override
 					public String value(Person type) {
 						return type.name;
 					}
@@ -167,6 +173,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<String, Person> nameDim = personFilter.dimension(
 				new ValueFunktion<Person, String>() {
 
+                    @Override
 					public String value(Person type) {
 						return type.name;
 					}
@@ -186,6 +193,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<String, Person> nameDim = personFilter.dimension(
 				new ValueFunktion<Person, String>() {
 
+                    @Override
 					public String value(Person type) {
 						return type.name;
 					}
@@ -205,6 +213,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<String, Person> nameDim = personFilter.dimension(
 				new ValueFunktion<Person, String>() {
 
+                    @Override
 					public String value(Person type) {
 						return type.name;
 					}
@@ -224,6 +233,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		Dimension<String, Person> nameDim = personFilter.dimension(
 				new ValueFunktion<Person, String>() {
 
+                    @Override
 					public String value(Person type) {
 						return type.name;
 					}
@@ -257,7 +267,7 @@ public class ParallelDimensionTest extends AbstractTest {
 		int[] ret = new int[list.size()];
 		int i = 0;
 		for (Integer e : list)
-			ret[i++] = e.intValue();
+			ret[i++] = e;
 		return ret;
 	}
 }
