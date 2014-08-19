@@ -52,12 +52,13 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 			return null;
 		}
 		V v = list.remove(index);
-		if (list.size() == 0) {
+		if (list.isEmpty()) {
 			map.remove(key);
 		}
 		return v;
 	}
 
+	@Override
 	public int getValueCount() {
 		int size = 0;
 		for (List<V> list : map.values()) {
@@ -74,6 +75,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		return list.size();
 	}
 
+	@Override
 	public int getKeyCount() {
 		return map.size();
 	}
@@ -87,12 +89,10 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		if (list == null) {
 			return false;
 		}
-		if (index >= list.size() || index < 0) {
-			return false;
-		}
-		return true;
+		return index < list.size() && index >= 0;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return map.isEmpty();
 	}
@@ -111,6 +111,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		map.clear();
 	}
 
+	@Override
 	public void filter(final K from, final K to,
 			final ReturnFunction<Collection<V>> returnFunction) {
 		dataFilter.getExecutorService().execute(new Runnable() {
@@ -140,6 +141,7 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 		});
 	}
 	
+	@Override
 	public void add(K key, V value) {
 		put(key, value);
 	}
@@ -155,14 +157,16 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 	 * @param to
 	 * @return
 	 */
+	@Override
 	public Collection<V> filterRange(K from, K to) {
 		return filter(from, to);
 	}
 
+	@Override
 	public Collection<V> filter(K from, K to) {
 		Map<K, List<V>> items = map.subMap(from, true, to, true);
 
-		List<V> result = new ArrayList<V>();
+		List<V> result = new ArrayList<>();
 		for (List<V> list : items.values()) {
 			result.addAll(list);
 		}
@@ -175,12 +179,14 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 	 * 
 	 * @return
 	 */
+	@Override
 	public Collection<V> filterAll() {
 		return filter();
 	}
 
+	@Override
 	public Collection<V> filter() {
-		List<V> result = new ArrayList<V>();
+		List<V> result = new ArrayList<>();
 		for (List<V> list : map.values()) {
 			result.addAll(list);
 		}
@@ -194,14 +200,26 @@ public abstract class AbstractIndex<K, V, M extends NavigableMap<K, List<V>>>
 	 * @param key
 	 * @return
 	 */
+	@Override
 	public Collection<V> filterExact(K key) {
 		return filter(key);
 	}
 
+	/**
+	 *
+	 * @param key
+	 * @return
+	 */
+	@Override
 	public Collection<V> filter(K key) {
 		return map.get(key);
 	}
 	
+	/**
+	 *
+	 * @return
+	 */
+	@Override
 	public Set<K> keys () {
 		return map.keySet();
 	}

@@ -15,6 +15,6 @@ public class NoSynchedDimension<K, V> extends
 
 	@Override
 	protected List<V> createList() {
-		return new ArrayList<V>();
+		return new ArrayList<>();
 	}
 }

@@ -77,12 +77,13 @@ public class DataFilter<T> {
 	}
 
 	/**
+	 * @param <BT>
 	 * @param clazz
 	 *            the type
 	 * @return
 	 */
 	public static <BT> Builder<BT> builder(Class<BT> clazz) {
-		return new Builder<BT>();
+		return new Builder<>();
 	}
 
 	/**
@@ -242,8 +243,8 @@ public class DataFilter<T> {
 
 	class DimensionAction<X> extends RecursiveAction {
 
-		private ValueFunktion<T, X> vaf;
-		private Dimension<X, T> dim;
+		private final ValueFunktion<T, X> vaf;
+		private final Dimension<X, T> dim;
 
 		private int start = -1;
 		private int end;

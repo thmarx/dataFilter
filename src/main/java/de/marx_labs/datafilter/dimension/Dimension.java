@@ -38,6 +38,9 @@ public interface Dimension<K, V> {
 
 	/**
 	 *
+	 * @param from
+	 * @param to
+	 * @param returnFunction
 	 */
 	public void filter(K from, K to,
 			ReturnFunction<Collection<V>> returnFunction);
